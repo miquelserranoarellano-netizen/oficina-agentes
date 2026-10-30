@@ -1,0 +1,42 @@
+# Servicio systemd de la Oficina de Miquel.
+# Copiar a /etc/systemd/system/oficina.service (ver DEPLOY.md).
+# Si tu usuario no es «ubuntu» o la carpeta es otra, cambia User, Group, WorkingDirectory y ReadWritePaths.
+
+[Unit]
+Description=Oficina de Miquel (agentes de IA)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/oficina-agentes
+Environment=NODE_ENV=production
+# Escucha solo en 127.0.0.1 (API_HOST del .env): desde fuera solo se llega a través de Caddy.
+ExecStart=/usr/bin/node --env-file-if-exists=.env server/index.ts
+Restart=on-failure
+RestartSec=5
+
+# Endurecimiento: la app solo puede escribir en data/ y resultados/.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/ubuntu/oficina-agentes/data /home/ubuntu/oficina-agentes/resultados
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+RestrictNamespaces=true
+LockPersonality=true
+SystemCallArchitectures=native
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target

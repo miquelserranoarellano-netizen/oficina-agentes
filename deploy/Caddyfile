@@ -1,0 +1,14 @@
+# Caddy: HTTPS automático (Let's Encrypt) delante de la oficina.
+# Copiar a /etc/caddy/Caddyfile y cambiar TU-SUBDOMINIO por el tuyo de DuckDNS (ver DEPLOY.md).
+
+TU-SUBDOMINIO.duckdns.org {
+	encode zstd gzip
+
+	# La app escucha solo en 127.0.0.1:3001. Caddy reenvía también el WebSocket (/ws).
+	reverse_proxy 127.0.0.1:3001
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		-Server
+	}
+}

@@ -1,0 +1,18 @@
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Secretos: la API key va solo en .env (ver .env.example)
+.env
+.env.*
+!.env.example
+
+# Datos locales: base de datos, copias y trabajo de los agentes
+data/
+resultados/
+
+# Configuración local de herramientas
+.claude/
+
+*.log
+.DS_Store

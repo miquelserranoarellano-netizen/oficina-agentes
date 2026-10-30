@@ -1,0 +1,7 @@
+# Finales de línea Unix en todo: los scripts de deploy/ fallan en Linux con CRLF.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.woff binary
+*.woff2 binary
+*.db binary
